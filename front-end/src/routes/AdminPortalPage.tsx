@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import localforage from 'localforage';
 import { DropzoneUploader } from '../components/admin/DropzoneUploader';
 import { ScriptFieldGrid } from '../components/admin/ScriptFieldGrid';
 import { OCRConfirmationModal } from '../components/admin/OCRConfirmationModal';
-import { BookOpen, UploadCloud, X, ArrowRight, FileText, CheckCircle, Clock, Save, Image as ImageIcon, Layout, Play, History, Trash2, ArrowLeft, Send, Key, Settings } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, Button } from '../components/shared/Elements';
+import { BookOpen, X, FileText, CheckCircle, Play, History, Trash2, ArrowLeft, Send, Settings } from 'lucide-react';
+import { Card, Button } from '../components/shared/Elements';
 import { AdminLayout } from '../components/admin/AdminLayout';
 import { pdfjs, Document, Page } from 'react-pdf';
 
@@ -47,6 +47,7 @@ interface PublishedBook {
   total_pages: number;
   created_at: string;
   updated_at: string;
+  publish_date?: string;
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -145,7 +146,7 @@ function PdfThumbnail({ draftId, magazineId }: { draftId?: string, magazineId?: 
 }
 
 export function AdminPortalPage() {
-  const navigate = useNavigate();
+
   const [file, setFile] = useState<File | null>(null);
   const [draftId, setDraftId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
@@ -949,22 +950,3 @@ export function AdminPortalPage() {
   );
 }
 
-function CheckCircleIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-      <polyline points="22 4 12 14.01 9 11.01" />
-    </svg>
-  )
-}

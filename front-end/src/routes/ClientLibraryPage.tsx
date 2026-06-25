@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle, Button } from '../components/shared/Elements';
+import { Card, Button } from '../components/shared/Elements';
 import { BookOpen, Play, Calendar, Lock, Search, Bell, Layers, Library, ChevronRight, CheckCircle, ArrowLeft } from 'lucide-react';
 import { RedemptionModal } from '../components/shared/RedemptionModal';
-import { pdfjs, Document, Page } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 

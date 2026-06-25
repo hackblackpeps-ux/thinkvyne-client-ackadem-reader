@@ -44,7 +44,7 @@ export function ScriptFieldGrid({ pageCount, scripts, onChange, onClearAll, onUp
   const [isMagnifierEnabled, setIsMagnifierEnabled] = useState(() => {
     return localStorage.getItem('ackadem_admin_magnifier') === 'true';
   });
-  const [lensPos, setLensPos] = useState<{ x: number, y: number } | null>(null);
+  const [lensPos, setLensPos] = useState<{ x: number, y: number, w: number, h: number } | null>(null);
   const pdfContainerRef = useRef<HTMLDivElement>(null);
 
   // Mobile Tab State
@@ -421,7 +421,9 @@ export function ScriptFieldGrid({ pageCount, scripts, onChange, onClearAll, onUp
               const rect = pdfContainerRef.current.getBoundingClientRect();
               setLensPos({
                 x: e.clientX - rect.left,
-                y: e.clientY - rect.top
+                y: e.clientY - rect.top,
+                w: rect.width,
+                h: rect.height
               });
             }}
             onMouseLeave={() => setLensPos(null)}
@@ -459,8 +461,10 @@ export function ScriptFieldGrid({ pageCount, scripts, onChange, onClearAll, onUp
                 }}
               >
                 <div 
-                  className="absolute"
+                  className="absolute bg-white"
                   style={{
+                    width: (lensPos?.w ?? 400) * 2.5,
+                    height: (lensPos?.h ?? 517) * 2.5,
                     left: -(lensPos?.x ?? 0) * 2.5 + 150,
                     top: -(lensPos?.y ?? 0) * 2.5 + 150,
                   }}
@@ -468,10 +472,10 @@ export function ScriptFieldGrid({ pageCount, scripts, onChange, onClearAll, onUp
                   <Document file={fileUrl}>
                     <Page 
                       pageNumber={currentPageIndex + 1} 
-                      width={1000} // 400 * 2.5
+                      width={1500} // Force high-res rendering
                       renderTextLayer={false} 
                       renderAnnotationLayer={false} 
-                      className="bg-white"
+                      className="!absolute !inset-0 !w-full !h-full [&_.react-pdf__Page__canvas]:!w-full [&_.react-pdf__Page__canvas]:!h-full [&_canvas]:!w-full [&_canvas]:!h-full bg-white"
                     />
                   </Document>
                 </div>

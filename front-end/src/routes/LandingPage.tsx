@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/shared/Elements';
 import { BookOpen, Trash2 } from 'lucide-react';
 import localforage from 'localforage';
@@ -7,8 +6,6 @@ import { AccessKeyManager } from '../components/admin/AccessKeyManager';
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
 export function LandingPage() {
-  const navigate = useNavigate();
-
   const handleClearDatabase = async () => {
     if (!window.confirm('Are you sure you want to completely wipe the database (books, keys, and reading progress) and clear local drafts? This action cannot be undone.')) {
       return;

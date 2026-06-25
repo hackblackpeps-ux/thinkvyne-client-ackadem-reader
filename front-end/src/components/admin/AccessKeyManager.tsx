@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Key, RefreshCw, XCircle, ChevronLeft, ChevronRight, Download, Copy, Check, Settings, Trash2 } from 'lucide-react';
+import { Key, RefreshCw, XCircle, ChevronLeft, ChevronRight, Copy, Check, Settings, Trash2 } from 'lucide-react';
 import { Button } from '../shared/Elements';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';

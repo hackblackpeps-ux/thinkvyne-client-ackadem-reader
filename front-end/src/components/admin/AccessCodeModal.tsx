@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X, RefreshCw, Key, Download } from 'lucide-react';
 import { Button } from '../shared/Elements';
 

@@ -30,7 +30,7 @@ const PageContainer = React.forwardRef<HTMLDivElement, { pageNumber: number, pdf
     
     // Lens state
     const [isHovering, setIsHovering] = useState(false);
-    const [lensPos, setLensPos] = useState<{x: number, y: number} | null>(null);
+    const [lensPos, setLensPos] = useState<{x: number, y: number, w: number, h: number} | null>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
     const isPageVisible = Math.abs(pageNumber - currentPageIndex) <= (isMobile ? 2 : 3);
@@ -73,7 +73,9 @@ const PageContainer = React.forwardRef<HTMLDivElement, { pageNumber: number, pdf
             setIsHovering(true);
             setLensPos({
               x: mouseEvent.clientX - rect.left,
-              y: mouseEvent.clientY - rect.top
+              y: mouseEvent.clientY - rect.top,
+              w: rect.width,
+              h: rect.height
             });
           }
         }
@@ -128,8 +130,10 @@ const PageContainer = React.forwardRef<HTMLDivElement, { pageNumber: number, pdf
                   }}
                 >
                   <div 
-                    className="absolute"
+                    className="absolute bg-white"
                     style={{
+                      width: lensPos.w * 2.5,
+                      height: lensPos.h * 2.5,
                       left: -(lensPos.x) * 2.5 + 150,
                       top: -(lensPos.y) * 2.5 + 150,
                     }}
@@ -138,7 +142,8 @@ const PageContainer = React.forwardRef<HTMLDivElement, { pageNumber: number, pdf
                       pageNumber={pageNumber + 1} 
                       renderTextLayer={false} 
                       renderAnnotationLayer={false}
-                      width={1000} // 400 * 2.5
+                      width={1500} // Force high-res internal rendering
+                      className="!absolute !inset-0 !w-full !h-full [&_.react-pdf__Page__canvas]:!w-full [&_.react-pdf__Page__canvas]:!h-full [&_canvas]:!w-full [&_canvas]:!h-full bg-white"
                     />
                   </div>
                 </div>
