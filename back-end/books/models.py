@@ -142,14 +142,12 @@ class Book(models.Model):
 
 @receiver(models.signals.post_delete, sender=Book)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
-    """Deletes file from filesystem when corresponding `Book` object is deleted."""
+    """Deletes file from storage when corresponding `Book` object is deleted."""
     if instance.pdf_file:
-        if os.path.isfile(instance.pdf_file.path):
-            os.remove(instance.pdf_file.path)
-            try:
-                os.rmdir(os.path.dirname(instance.pdf_file.path))
-            except OSError:
-                pass
+        try:
+            instance.pdf_file.delete(save=False)
+        except Exception:
+            pass
 
 @receiver(models.signals.pre_save, sender=Book)
 def auto_move_file_on_status_change(sender, instance, **kwargs):
@@ -162,20 +160,24 @@ def auto_move_file_on_status_change(sender, instance, **kwargs):
         return
     
     if old_book.is_published != instance.is_published and old_book.pdf_file:
-        old_path = old_book.pdf_file.path
-        if os.path.isfile(old_path):
-            new_folder = 'books' if instance.is_published else 'drafts'
-            new_rel_path = f"{new_folder}/{instance.id}/{os.path.basename(old_path)}"
-            new_full_path = os.path.join(settings.MEDIA_ROOT, new_rel_path)
-            
-            os.makedirs(os.path.dirname(new_full_path), exist_ok=True)
-            shutil.move(old_path, new_full_path)
-            instance.pdf_file.name = new_rel_path
-            
-            try:
-                os.rmdir(os.path.dirname(old_path))
-            except OSError:
-                pass
+        try:
+            old_path = old_book.pdf_file.path
+            if os.path.isfile(old_path):
+                new_folder = 'books' if instance.is_published else 'drafts'
+                new_rel_path = f"{new_folder}/{instance.id}/{os.path.basename(old_path)}"
+                new_full_path = os.path.join(settings.MEDIA_ROOT, new_rel_path)
+                
+                os.makedirs(os.path.dirname(new_full_path), exist_ok=True)
+                shutil.move(old_path, new_full_path)
+                instance.pdf_file.name = new_rel_path
+                
+                try:
+                    os.rmdir(os.path.dirname(old_path))
+                except OSError:
+                    pass
+        except NotImplementedError:
+            # Remote storage like Cloudinary doesn't support local .path
+            pass
 
 
 class UserReadingProgress(models.Model):
