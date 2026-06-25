@@ -60,7 +60,9 @@ const PageContainer = React.forwardRef<HTMLDivElement, { pageNumber: number, pdf
             setIsHovering(true);
             setLensPos({
               x: touchEvent.touches[0].clientX - rect.left,
-              y: touchEvent.touches[0].clientY - rect.top
+              y: touchEvent.touches[0].clientY - rect.top,
+              w: rect.width,
+              h: rect.height
             });
           }
         } else {
