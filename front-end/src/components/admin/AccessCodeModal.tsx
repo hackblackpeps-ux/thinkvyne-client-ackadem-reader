@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, RefreshCw, Key, Download } from 'lucide-react';
 import { Button } from '../shared/Elements';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`;
 
 interface AccessCode {
   code: string;

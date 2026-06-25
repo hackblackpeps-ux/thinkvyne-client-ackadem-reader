@@ -9,7 +9,7 @@ import { Card, Button } from '../components/shared/Elements';
 import { AdminLayout } from '../components/admin/AdminLayout';
 import { pdfjs, Document, Page } from 'react-pdf';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`;
 
 // ── IndexedDB keys ─────────────────────────────────────────────────────────────
 // All draft data lives in the browser's IndexedDB (via localforage).

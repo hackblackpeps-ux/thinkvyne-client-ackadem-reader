@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X, Unlock, Loader2 } from 'lucide-react';
 import { Button } from './Elements';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`;
 
 interface RedemptionModalProps {
   isOpen: boolean;

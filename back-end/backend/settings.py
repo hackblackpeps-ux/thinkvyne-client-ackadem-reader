@@ -111,11 +111,11 @@ REST_FRAMEWORK = {
 
 # CORS Configuration
 # Allows the React dev server (Vite on 5173) and production Vercel domain to call this API.
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:3000',
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://.*:5173$",
+    r"^http://.*:3000$",
+    r"^http://localhost:.*$",
+    r"^http://127\.0\.0\.1:.*$"
 ]
 # Must be False when using credentials (cookies)
 CORS_ALLOW_ALL_ORIGINS = False

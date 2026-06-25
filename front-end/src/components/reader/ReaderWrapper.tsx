@@ -4,7 +4,7 @@ import { AudioPlaybackShelf } from './AudioPlaybackShelf';
 import { ClosedCaptionsOverlay } from './ClosedCaptionsOverlay';
 import { ArrowLeft, BookOpen, ZoomIn } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`;
 
 // Mock interface for the fetched payload
 export interface MagazinePayload {
